@@ -1,0 +1,2 @@
+#!/bin/env bash
+python3 ~/PycharmProjects/tldr/tldr.py "$@" | tee >(xclip -sel c ) 
