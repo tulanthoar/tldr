@@ -1,28 +1,30 @@
 from sys import argv
 from urllib3.util.url import parse_url
 from pyperclip import paste
-from path import Path,getcwdu
+from path import Path, getcwdu
 from sh import wget
 import tarfile
 
 target = ''
-try:
-    if len(argv) == 2:
-        target = argv[1]
-    else:
-        target = paste()
-except Exception:
-    print('no arguments or clipboard contents')
+tarname = 'temporary_tar'
+if len(argv) == 2:
+    target = argv[1]
+elif len(argv) > 2:
+    target = argv[1]
+else:
+    target = paste()
+if target == '':
+    print('no clipboard or args for target')
 if not Path(target).exists():
-    wget(target, O='temporary_tar')
+    wget(target, O=tarname)
     maybeU = parse_url(target)
     maybeF = maybeU.path.split('/')[-1]
     targetF = getcwdu() + '/' + maybeF.split('.')[0]
 else:
-    Path(target).move('temporary_tar')
+    Path(target).move(tarname)
     targetF = target.split('/')[-1]
     targetF = getcwdu() + '/' + targetF.split('.')[0]
-with tarfile.open('temporary_tar') as tf:
+with tarfile.open(tarname) as tf:
     tf.extractall()
-Path('temporary_tar').remove()
+Path(tarname).remove()
 print(Path(targetF), end='')

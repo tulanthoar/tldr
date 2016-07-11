@@ -1,3 +1,3 @@
-from pyperclip import copy,paste,set_clipboard
+from pyperclip import copy, set_clipboard
 set_clipboard('xsel')
-copy('hello')`
+copy('hello')

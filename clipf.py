@@ -1,8 +1,8 @@
-from path import Path,getcwdu
+from path import Path, getcwdu
 from pyperclip import copy
 from sys import argv
 
-toCp=''
+toCp = ''
 if len(argv) == 1:
     toCp = getcwdu()
     copy(toCp)
